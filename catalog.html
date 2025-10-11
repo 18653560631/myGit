@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>礼品卡库 - 积分兑换演示</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">LOYALTY DEMO</div>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="catalog.html">礼品卡库</a></li>
+          <li><a href="redeem.html">积分兑换</a></li>
+          <li><a href="history.html">兑换记录</a></li>
+        </ul>
+      </nav>
+      <div class="hero">
+        <h1>礼品卡库存总览</h1>
+        <p>展示已预置的礼品卡基础信息、消耗积分与当前状态，方便现场讲解库存管理逻辑。</p>
+      </div>
+    </header>
+    <main>
+      <section class="section">
+        <h2>筛选条件</h2>
+        <div class="grid two">
+          <div>
+            <label for="status-filter">按状态筛选</label>
+            <select id="status-filter">
+              <option value="all">全部礼品卡</option>
+              <option value="available">可兑换</option>
+              <option value="reserved">已锁定</option>
+              <option value="redeemed">已兑完</option>
+            </select>
+          </div>
+          <div class="summary">
+            <strong>库存数据示例</strong>
+            <span>礼品卡默认存储在浏览器 LocalStorage</span>
+            <span>可通过兑换页重置为初始值</span>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2>礼品卡列表</h2>
+        <div id="card-list" class="grid two"></div>
+      </section>
+      <div class="footer">库存信息来源于 assets/js/data.js，可按需替换为真实内容。</div>
+    </main>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/catalog.js"></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>积分兑换 - 礼品卡演示</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">LOYALTY DEMO</div>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="catalog.html">礼品卡库</a></li>
+          <li><a href="redeem.html">积分兑换</a></li>
+          <li><a href="history.html">兑换记录</a></li>
+        </ul>
+      </nav>
+      <div class="hero">
+        <h1>积分兑换礼品卡</h1>
+        <p>填写会员信息后提交，即可模拟生成兑换凭证并写入本地记录。</p>
+        <div class="cta">
+          <button class="btn btn-secondary" id="reset-storage" type="button">重置演示数据</button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="section">
+        <h2>礼品卡信息</h2>
+        <div class="grid two">
+          <form id="redeem-form">
+            <div>
+              <label for="card-code">选择礼品卡</label>
+              <select id="card-code" name="card-code" required></select>
+            </div>
+            <div>
+              <label for="member-id">会员编号</label>
+              <input
+                id="member-id"
+                name="member-id"
+                type="text"
+                placeholder="如：VIP20240101"
+                required
+              />
+            </div>
+            <div>
+              <label for="contact">联系方式（选填）</label>
+              <input id="contact" name="contact" type="text" placeholder="手机号或邮箱" />
+            </div>
+            <div>
+              <label for="note">备注信息（选填）</label>
+              <textarea id="note" name="note" placeholder="如：客户预约 5 月 20 日到店"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">确认兑换并生成凭证</button>
+            <div id="feedback"></div>
+          </form>
+          <div class="summary">
+            <strong id="summary-name">选择礼品卡后展示详情</strong>
+            <span>面值：<span id="summary-value">-</span></span>
+            <span>所需积分：<span id="summary-points">-</span></span>
+            <p id="summary-description"></p>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2>操作提示</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>实时校验库存</h3>
+            <p>当礼品卡被兑换后状态变为“已兑完”，下次选择即会被禁用，避免重复发放。</p>
+          </div>
+          <div class="card">
+            <h3>生成兑换凭证号</h3>
+            <p>提交后自动生成带时间戳的凭证号，便于与客服或履约系统对接。</p>
+          </div>
+        </div>
+      </section>
+      <div class="footer">若需清空所有兑换记录，可使用顶部的“重置演示数据”按钮。</div>
+    </main>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/redeem.js"></script>
+  </body>
+</html>

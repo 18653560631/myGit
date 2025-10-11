@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>积分商城礼品卡兑换演示</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">LOYALTY DEMO</div>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="catalog.html">礼品卡库</a></li>
+          <li><a href="redeem.html">积分兑换</a></li>
+          <li><a href="history.html">兑换记录</a></li>
+        </ul>
+      </nav>
+      <div class="hero">
+        <h1>三步走，完成积分礼品卡兑换</h1>
+        <p>
+          通过静态网页快速模拟会员兑换礼品卡的全流程：选择库存、填写会员资料、生成兑换凭证，并可随时查看历史记录。
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="redeem.html">立即发起兑换</a>
+          <a class="btn btn-secondary" href="catalog.html">查看可兑换项目</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="section">
+        <h2>演示流程概览</h2>
+        <div class="grid three">
+          <div class="card">
+            <h3>1. 浏览礼品卡库</h3>
+            <p>从后台预置的礼品卡库存中，了解所需积分、使用规则与状态。</p>
+            <span class="badge">catalog.html</span>
+          </div>
+          <div class="card">
+            <h3>2. 填写兑换信息</h3>
+            <p>录入会员编号、联系方式及备注，系统即时校验库存并锁定名额。</p>
+            <span class="badge">redeem.html</span>
+          </div>
+          <div class="card">
+            <h3>3. 输出兑换凭证</h3>
+            <p>提交后自动生成凭证号与时间戳，同时写入本地历史记录方便追溯。</p>
+            <span class="badge">history.html</span>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2>适合即刻演示的亮点</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>即开即用</h3>
+            <p>无需后端服务，打开网页即可模拟真实的积分兑换业务。</p>
+          </div>
+          <div class="card">
+            <h3>真实数据结构</h3>
+            <p>预设礼品卡信息、状态与使用须知，贴合客户实际运营场景。</p>
+          </div>
+          <div class="card">
+            <h3>自动生成凭证</h3>
+            <p>提交后生成兑换凭证号，便于演示给客户如何对接业务流程。</p>
+          </div>
+          <div class="card">
+            <h3>可重置数据</h3>
+            <p>通过兑换页的“重置数据”按钮即可恢复初始库存与记录。</p>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2>如何向客户讲解</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>会员场景</h3>
+            <p>
+              引导客户看到会员编号、联系方式的录入方式，以及前端如何提示兑换状态。
+            </p>
+          </div>
+          <div class="card">
+            <h3>运营视角</h3>
+            <p>
+              通过礼品卡库和历史记录页面展示库存管理、发放追踪与凭证号的生成逻辑。
+            </p>
+          </div>
+        </div>
+      </section>
+      <div class="footer">静态演示数据保存在浏览器 LocalStorage，可在兑换页重置。</div>
+    </main>
+  </body>
+</html>

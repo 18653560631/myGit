@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>兑换记录 - 礼品卡演示</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="brand">LOYALTY DEMO</div>
+        <ul>
+          <li><a href="index.html">首页</a></li>
+          <li><a href="catalog.html">礼品卡库</a></li>
+          <li><a href="redeem.html">积分兑换</a></li>
+          <li><a href="history.html">兑换记录</a></li>
+        </ul>
+      </nav>
+      <div class="hero">
+        <h1>兑换记录追踪</h1>
+        <p>所有兑换凭证将写入浏览器 LocalStorage，方便现场向客户展示对账与追踪流程。</p>
+      </div>
+    </header>
+    <main>
+      <section class="section">
+        <h2>兑换记录明细</h2>
+        <div id="history-empty" class="empty-state">暂无兑换记录，可前往“积分兑换”页面试用。</div>
+        <div class="card">
+          <div class="summary">
+            <strong>本页面用途</strong>
+            <span>模拟运营同学导出或查阅兑换凭证</span>
+            <span>展示凭证号、会员编号、面值与备注等关键信息</span>
+          </div>
+        </div>
+        <div class="card" style="overflow-x: auto;">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>凭证号</th>
+                <th>兑换码</th>
+                <th>礼品卡</th>
+                <th>会员编号</th>
+                <th>联系方式</th>
+                <th>礼品卡面值</th>
+                <th>消耗积分</th>
+                <th>兑换时间</th>
+                <th>备注</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+      <div class="footer">历史记录由 assets/js/redeem.js 生成，可通过兑换页重置数据。</div>
+    </main>
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/history.js"></script>
+  </body>
+</html>
