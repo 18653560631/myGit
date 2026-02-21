@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>20以内加减法乐园</title>
+  <style>
+    :root {
+      --bg1: #fff8e7;
+      --bg2: #e8f9ff;
+      --card: #ffffff;
+      --primary: #ff7b54;
+      --secondary: #5f6fff;
+      --ok: #2bb673;
+      --bad: #ff4d6d;
+      --text: #2b2d42;
+      --gold: #ffb703;
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Comic Sans MS", "PingFang SC", "Microsoft Yahei", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .app {
+      width: min(960px, 100%);
+      background: var(--card);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(120deg, #ffd166, #ff9f68);
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .title { margin: 0; font-size: clamp(1.2rem, 2.5vw, 1.8rem); }
+    .subtitle { margin: 4px 0 0; font-size: 0.95rem; }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-weight: bold;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.95rem;
+    }
+
+    .pill.points {
+      background: #fff3c4;
+      border: 1px solid #ffd86b;
+    }
+
+    .content {
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.2s ease;
+    }
+
+    button:hover { transform: translateY(-2px); filter: brightness(1.03); }
+
+    .mode {
+      background: #f1f2ff;
+      color: #31336b;
+    }
+
+    .mode.active {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .new-q {
+      background: var(--primary);
+      color: white;
+      margin-left: auto;
+    }
+
+    .panel {
+      display: grid;
+      gap: 12px;
+      background: #f9fbff;
+      border: 2px dashed #b8c0ff;
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .question {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: bold;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .rule-tip {
+      text-align: center;
+      color: #565f86;
+      font-size: 0.92rem;
+    }
+
+    .visual {
+      min-height: 82px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      font-size: 1.7rem;
+    }
+
+    .answer-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    input[type="number"] {
+      width: 140px;
+      font-size: 1.2rem;
+      border: 2px solid #d4d8f5;
+      border-radius: 12px;
+      padding: 9px 10px;
+      text-align: center;
+    }
+
+    .submit {
+      background: #3db2ff;
+      color: white;
+      font-weight: bold;
+    }
+
+    .msg {
+      text-align: center;
+      min-height: 28px;
+      font-weight: bold;
+      font-size: 1.06rem;
+    }
+
+    .msg.good { color: var(--ok); }
+    .msg.bad { color: var(--bad); }
+
+    .progress-wrap {
+      height: 16px;
+      background: #edf1ff;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2ec4b6, #90be6d);
+      transition: width 0.3s ease;
+    }
+
+    .shop {
+      margin-top: 10px;
+      border-top: 2px dashed #d8ddff;
+      padding-top: 14px;
+    }
+
+    .shop h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      color: #3f4a7a;
+    }
+
+    .shop-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .item {
+      background: #fff;
+      border: 1px solid #e2e7ff;
+      border-radius: 12px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .redeem {
+      background: var(--gold);
+      color: #4a3b00;
+      font-weight: bold;
+    }
+
+    .tips {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #52627a;
+      text-align: center;
+    }
+
+    .burst { animation: burst 0.7s ease; }
+
+    @keyframes burst {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <header class="header">
+      <div>
+        <h1 class="title">🌈 20以内加减法乐园</h1>
+        <p class="subtitle">寓教于乐 · 图形辅助 · 每次10题小挑战 · 积分商城版V2</p>
+      </div>
+      <div class="stats">
+        <span class="pill">✅ 正确：<b id="correctCount">0</b></span>
+        <span class="pill">❌ 错误：<b id="wrongCount">0</b></span>
+        <span class="pill">🎯 进度：<b id="progressText">0/10</b></span>
+        <span class="pill points">🏅 积分：<b id="pointsCount">0</b></span>
+      </div>
+    </header>
+
+    <section class="content">
+      <div class="controls">
+        <button class="mode active" data-mode="mix">混合模式</button>
+        <button class="mode" data-mode="add">只练加法</button>
+        <button class="mode" data-mode="sub">只练减法</button>
+        <button class="new-q" id="newQuestionBtn">换一题 🔄</button>
+      </div>
+
+      <div class="panel">
+        <div class="question" id="questionText">准备开始！</div>
+        <div class="rule-tip">答对得分规则：进位/借位题 +2分，简单题 +1分</div>
+        <div class="visual" id="visualArea" aria-live="polite"></div>
+
+        <div class="answer-row">
+          <input id="answerInput" type="number" min="0" max="20" placeholder="输入答案" />
+          <button class="submit" id="submitBtn">提交答案</button>
+        </div>
+
+        <div class="msg" id="message"></div>
+        <div class="progress-wrap"><div class="progress" id="progressBar"></div></div>
+        <p class="tips">小提示：先看图形数量，再口算，会更快哦！🧠✨</p>
+
+        <section class="shop" aria-label="积分商城">
+          <h2>🛍️ 积分商城</h2>
+          <div class="shop-list">
+            <article class="item">
+              <strong>🎮 游戏 1 小时</strong>
+              <span>需要积分：100</span>
+              <button class="redeem" data-cost="100" data-name="游戏一小时">兑换</button>
+            </article>
+            <article class="item">
+              <strong>🍰 蛋糕 1 块</strong>
+              <span>需要积分：500</span>
+              <button class="redeem" data-cost="500" data-name="蛋糕一块">兑换</button>
+            </article>
+            <article class="item">
+              <strong>🤖 机器人模型 1 个</strong>
+              <span>需要积分：2000</span>
+              <button class="redeem" data-cost="2000" data-name="机器人的模型">兑换</button>
+            </article>
+          </div>
+          <p class="tips" id="shopMessage">认真练习，攒积分来兑换奖励吧！</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const totalQuestions = 10;
+    const storageKey = 'kids_math_points';
+
+    const state = {
+      mode: 'mix',
+      current: null,
+      correct: 0,
+      wrong: 0,
+      done: 0,
+      points: 0
+    };
+
+    const emojis = ['🍎', '⭐', '🧸', '🚗', '🍇', '🐣'];
+
+    const refs = {
+      modeBtns: document.querySelectorAll('.mode'),
+      questionText: document.getElementById('questionText'),
+      visualArea: document.getElementById('visualArea'),
+      answerInput: document.getElementById('answerInput'),
+      submitBtn: document.getElementById('submitBtn'),
+      newQuestionBtn: document.getElementById('newQuestionBtn'),
+      message: document.getElementById('message'),
+      shopMessage: document.getElementById('shopMessage'),
+      correctCount: document.getElementById('correctCount'),
+      wrongCount: document.getElementById('wrongCount'),
+      progressText: document.getElementById('progressText'),
+      pointsCount: document.getElementById('pointsCount'),
+      progressBar: document.getElementById('progressBar'),
+      redeemBtns: document.querySelectorAll('.redeem'),
+      app: document.getElementById('app')
+    };
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function randomEmoji() {
+      return emojis[rand(0, emojis.length - 1)];
+    }
+
+    function loadPoints() {
+      const saved = Number(localStorage.getItem(storageKey));
+      state.points = Number.isFinite(saved) && saved >= 0 ? saved : 0;
+    }
+
+    function savePoints() {
+      localStorage.setItem(storageKey, String(state.points));
+    }
+
+    function getQuestionScore(q) {
+      if (q.symbol === '+') {
+        return (q.a % 10) + (q.b % 10) >= 10 ? 2 : 1;
+      }
+      return (q.a % 10) < (q.b % 10) ? 2 : 1;
+    }
+
+    function createQuestion() {
+      let op = state.mode;
+      if (op === 'mix') op = Math.random() > 0.5 ? 'add' : 'sub';
+
+      let a = rand(0, 20);
+      let b = rand(0, 20);
+
+      if (op === 'add') {
+        while (a + b > 20) {
+          a = rand(0, 20);
+          b = rand(0, 20);
+        }
+      } else if (a < b) {
+        [a, b] = [b, a];
+      }
+
+      const symbol = op === 'add' ? '+' : '-';
+      const answer = op === 'add' ? a + b : a - b;
+
+      state.current = { a, b, symbol, answer, emoji: randomEmoji() };
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const { a, b, symbol, emoji } = state.current;
+      refs.questionText.textContent = `${a} ${symbol} ${b} = ?`;
+
+      if (symbol === '+') {
+        refs.visualArea.innerHTML = `${emoji}`.repeat(a) + ' <span style="padding:0 8px">＋</span> ' + `${emoji}`.repeat(b);
+      } else {
+        const kept = a - b;
+        refs.visualArea.innerHTML = `${emoji}`.repeat(a) + ` <span style="font-size:1rem; color:#7a7f95; width:100%; text-align:center;">拿走 ${b} 个，还剩 ${kept} 个</span>`;
+      }
+
+      refs.answerInput.value = '';
+      refs.answerInput.focus();
+      clearMessage();
+    }
+
+    function clearMessage() {
+      refs.message.textContent = '';
+      refs.message.className = 'msg';
+    }
+
+    function updateStats() {
+      refs.correctCount.textContent = state.correct;
+      refs.wrongCount.textContent = state.wrong;
+      refs.progressText.textContent = `${state.done}/${totalQuestions}`;
+      refs.pointsCount.textContent = state.points;
+      refs.progressBar.style.width = `${(state.done / totalQuestions) * 100}%`;
+    }
+
+    function setMessage(text, ok) {
+      refs.message.textContent = text;
+      refs.message.className = ok ? 'msg good' : 'msg bad';
+      if (ok) {
+        refs.app.classList.remove('burst');
+        void refs.app.offsetWidth;
+        refs.app.classList.add('burst');
+      }
+    }
+
+    function submitAnswer() {
+      if (!state.current || state.done >= totalQuestions) return;
+      const value = Number(refs.answerInput.value);
+      if (Number.isNaN(value)) {
+        setMessage('先输入一个数字哦～', false);
+        return;
+      }
+
+      if (value === state.current.answer) {
+        const score = getQuestionScore(state.current);
+        state.correct += 1;
+        state.done += 1;
+        state.points += score;
+        savePoints();
+        setMessage(`太棒啦！答对了 🎉 +${score} 积分`, true);
+      } else {
+        state.wrong += 1;
+        state.done += 1;
+        setMessage(`再努力一下，正确答案是 ${state.current.answer} 💡`, false);
+      }
+
+      updateStats();
+
+      if (state.done >= totalQuestions) {
+        refs.questionText.textContent = '闯关完成！';
+        refs.visualArea.textContent = `你一共答对 ${state.correct} 题，目前总积分 ${state.points}。`;
+        return;
+      }
+
+      setTimeout(createQuestion, 900);
+    }
+
+    function redeemReward(cost, name) {
+      if (state.points < cost) {
+        refs.shopMessage.textContent = `积分不够哦，兑换${name}需要 ${cost} 分，当前 ${state.points} 分。`;
+        return;
+      }
+
+      state.points -= cost;
+      savePoints();
+      updateStats();
+      refs.shopMessage.textContent = `兑换成功：${name} 🎁 已扣除 ${cost} 积分！`;
+    }
+
+    function resetSession() {
+      state.correct = 0;
+      state.wrong = 0;
+      state.done = 0;
+      updateStats();
+      createQuestion();
+    }
+
+    refs.modeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        refs.modeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.mode = btn.dataset.mode;
+        resetSession();
+      });
+    });
+
+    refs.redeemBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cost = Number(btn.dataset.cost);
+        const name = btn.dataset.name;
+        redeemReward(cost, name);
+      });
+    });
+
+    refs.submitBtn.addEventListener('click', submitAnswer);
+    refs.answerInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') submitAnswer();
+    });
+
+    refs.newQuestionBtn.addEventListener('click', () => {
+      if (state.done < totalQuestions) createQuestion();
+    });
+
+    loadPoints();
+    updateStats();
+    createQuestion();
+  </script>
+</body>
+</html>
